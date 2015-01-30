@@ -1,0 +1,17 @@
+node_modules
+vendor
+.DS_Store
+.settings
+.project
+.bem/cache
+.bem/snapshots
+desktop.bundles/*/*.*
+!desktop.bundles/*/*.bemdecl.js
+!desktop.bundles/.bem/*
+sftp-config.json
+*.sublime-project
+*.sublime-workspace
+server.log
+.borschik
+public/frontend/.bem/cache/*/*.*
+
