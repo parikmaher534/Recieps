@@ -14,4 +14,5 @@ sftp-config.json
 server.log
 .borschik
 public/frontend/.bem/cache/*/*.*
+public/frontend/desktop.bundles/*/*.*
 
