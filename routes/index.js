@@ -4,7 +4,7 @@ var express = require('express'),
 
 /* Связываем урлы с ручками */
 router.get('/', controllers['PageController'].init);
-router.get('/.categories', controllers['CategoriesController'].init);
+router.get('/.recipes', controllers['RecipesController'].init);
 
 
 module.exports = router;
