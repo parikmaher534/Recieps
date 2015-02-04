@@ -1,5 +1,19 @@
 block b-content {
 
-    content: 'CONTENT HUY'
+    content: [
+        {
+            elem: 'Перечислите продукты которые у вас есть:',
+            tag: 'h4'
+        },
+
+        {
+            block: 'b-search'
+        },
+
+        {
+            block: 'b-search-button'
+        }
+
+    ]
 
 }

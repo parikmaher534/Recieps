@@ -1,0 +1,13 @@
+block b-header {
+
+    content: {
+
+        elem: 'title',
+
+        tag: 'h3',
+
+        content: 'Хочу быстро и вкусно приготовить.'
+
+    }
+
+}

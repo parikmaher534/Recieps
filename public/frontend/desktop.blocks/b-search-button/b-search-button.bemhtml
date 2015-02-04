@@ -1,0 +1,13 @@
+block b-search-button {
+
+    content: {
+        block: 'button',
+
+        js: true,
+
+        mods: { type: 'search' },
+
+        content: 'Искать'
+    }
+
+}

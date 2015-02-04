@@ -1,0 +1,8 @@
+({
+    shouldDeps: [
+        {
+            block: 'b-search'
+        }
+    ]
+})
+
