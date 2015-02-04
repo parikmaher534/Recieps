@@ -22,6 +22,12 @@ exports.blocks = [
         ]
     },
     {
+        "name": "b-header"
+    },
+    {
         "name": "b-content"
+    },
+    {
+        "name": "b-footer"
     }
 ];
