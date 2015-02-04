@@ -13,6 +13,6 @@ sftp-config.json
 *.sublime-workspace
 server.log
 .borschik
-public/frontend/.bem/cache/*/*.*
+public/frontend/.bem/cache
 public/frontend/desktop.bundles/*/*.*
 
