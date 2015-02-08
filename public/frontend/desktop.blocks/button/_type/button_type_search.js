@@ -1,11 +1,13 @@
-BEM.DOM.decl({block: 'button', modName: 'type', modVal: 'search'}, {
+modules.define('control',
+    function(provide, Control) {
 
-    onSetMod: {
-        js: function() {
+        provide(Control.decl({
+            onSetMod : {
+                js: function() {
+                    console.log('FFF', this)
+                }
+            }
+        }));
 
-            console.log('!!!!')
-
-        }
     }
-
-});
+)

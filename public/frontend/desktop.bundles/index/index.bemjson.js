@@ -13,7 +13,7 @@
 
     scripts: [
         { elem : 'js', url : 'frontend/desktop.bundles/index/index.bemhtml.js' },
-        { elem : 'js', url : 'frontend/desktop.bundles/index/index.js' }
+        { elem : 'js', url : 'frontend/desktop.bundles/index/_index.js' }
     ],
 
     mods : { theme : 'islands' },
