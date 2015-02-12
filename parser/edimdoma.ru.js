@@ -1,5 +1,5 @@
 var pageToDOM = require('./pageToDOM.js');
-    Q = require('Q');
+    Q = require('q');
     url = require('url'),
     mongoose = require('mongoose'),
 
