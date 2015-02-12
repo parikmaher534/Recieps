@@ -1,10 +1,11 @@
-var Crawler = require("crawler"),
+var pageToDOM = require('./pageToDOM.js');
     Q = require('Q');
     url = require('url'),
     mongoose = require('mongoose'),
 
     recipeModel = require('../models/Recipe.js'),
     recipeIngredientModel = require('../models/RecipeIngredient.js');
+
 
 var from, to;
 if(process.argv[2] && ~process.argv[2].indexOf('from')) from = process.argv[2].split('=')[1];
@@ -13,15 +14,7 @@ if(process.argv[3] && ~process.argv[3].indexOf('to')) to = process.argv[3].split
 var grabURL = "http://www.edimdoma.ru",
     page = from || 2,
     pageMax = to || 3,
-    links = [],
-    linksGrabber = new Crawler({
-        maxConnections : 100,
-        callback : getReciepsLinks
-    }),
-    recipeGrabber = new Crawler({
-        maxConnections : 100
-    });
-
+    links = [];
 
 //Просто коннект к базюльке
 ;(function() {
@@ -29,6 +22,11 @@ var grabURL = "http://www.edimdoma.ru",
     mongoose.connection
         .once('open', function() {
             console.log('info', 'Mongoose was connected successfully.');
+
+            pageToDOM.get({
+                url: grabURL + '/retsepty',
+                callback: getReciepsLinks
+            });
         })
         .once('error', function(err) {
             console.log('error', 'Mongoose connection error: ', err);
@@ -38,19 +36,18 @@ var grabURL = "http://www.edimdoma.ru",
 
 
 
-function getReciepsLinks(error, result, $) {
+function getReciepsLinks($) {
     ++page;
 
-    if( !error ) {
-        $('.l-centercol .b-page_block__title a').each(function(i, a) {
-            links.push($(a).attr('href'));
-        });
-    } else {
-        console.log('Get page data error: ', error);
-    }
+    $('.l-centercol .b-page_block__title a').each(function(i, a) {
+        links.push($(a).attr('href'));
+    });
 
     if( page <= pageMax ) {
-        linksGrabber.queue(grabURL + '/retsepty?page=' + page);
+        pageToDOM.get({
+            url: grabURL + '/retsepty?page=' + page,
+            callback: getReciepsLinks
+        });
     } else {
         getRecipesData();
     };
@@ -60,10 +57,10 @@ function getRecipesData() {
     var defs = [];
 
     links.forEach(function(a, i) {
-        recipeGrabber.queue([{
-            uri: a,
-            callback: function (error, result, $) {
-                defs.push(getReciepData(error, result, $, a));
+        pageToDOM.get({
+            url: a,
+            callback: function ($) {
+                defs.push(getReciepData($, a));
 
                 //Когда все сграблено и записано в базу
                 if( i == links.length - 1 ) {
@@ -73,11 +70,11 @@ function getRecipesData() {
                     });
                 };
             }
-        }]);
+        });
     });
 };
 
-function getReciepData(error, result, $, url) {
+function getReciepData($, url) {
     var d = Q.defer();
 
     recipeModel.model.find(
@@ -186,5 +183,3 @@ function getReciepData(error, result, $, url) {
 
     return d.promise;
 };
-
-linksGrabber.queue(grabURL + '/retsepty');
