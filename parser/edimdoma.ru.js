@@ -6,17 +6,18 @@ var pageToDOM = require('./pageToDOM.js');
     recipeModel = require('../models/Recipe.js'),
     recipeIngredientModel = require('../models/RecipeIngredient.js');
 
-
 var from, to;
-if(process.argv[2] && ~process.argv[2].indexOf('from')) from = process.argv[2].split('=')[1];
-if(process.argv[3] && ~process.argv[3].indexOf('to')) to = process.argv[3].split('=')[1];
+if (process.argv[2] && ~process.argv[2].indexOf('from')) from = process.argv[2].split('=')[1];
+if (process.argv[3] && ~process.argv[3].indexOf('to')) to = process.argv[3].split('=')[1];
 
 var grabURL = "http://www.edimdoma.ru",
     page = from || 2,
     pageMax = to || 3,
     links = [];
 
-//Просто коннект к базюльке
+
+
+// Просто коннект к базюльке
 ;(function() {
     mongoose.connect('127.0.0.1', 'WantToCook', 27017);
     mongoose.connection
@@ -43,7 +44,7 @@ function getReciepsLinks($) {
         links.push($(a).attr('href'));
     });
 
-    if( page <= pageMax ) {
+    if (page <= pageMax) {
         pageToDOM.get({
             url: grabURL + '/retsepty?page=' + page,
             callback: getReciepsLinks
@@ -62,8 +63,8 @@ function getRecipesData() {
             callback: function ($) {
                 defs.push(getReciepData($, a));
 
-                //Когда все сграблено и записано в базу
-                if( i == links.length - 1 ) {
+                // Когда все сграблено и записано в базу
+                if (i == links.length - 1) {
                     Q.allResolved(defs).then(function() {
                         console.log('Job Done.');
                         process.exit();
@@ -83,11 +84,11 @@ function getReciepData($, url) {
     },
     function(err, doc) {
 
-        //Если у нас нет ещё рецепта с таким именем то качаем
-        if( !err && !doc.length ) {
+        // Если у нас нет ещё рецепта с таким именем то качаем
+        if (!err && !doc.length) {
             var ingsQuery = $('.rec-ingred-table tr');
 
-            if( ingsQuery.length ) {
+            if (ingsQuery.length) {
 
                 recipeModel.model.create(
                 {
@@ -101,7 +102,7 @@ function getReciepData($, url) {
                     var reciepsDefs, recipesIds, searchIngArr,
                         resultContent = '';
 
-                    if( !err ) {
+                    if (!err) {
                         recipesDefs = [];
                         recipesIds = [];
                         searchIngArr = [];
@@ -116,7 +117,7 @@ function getReciepData($, url) {
                                 ingredient: $(el).find('td').eq(0).text()
                             },
                             function(err, data) {
-                                if( !err ) {
+                                if (!err) {
                                     searchIngArr.push(data.ingredient);
                                     recipesIds.push(data._id);
                                     recipeDef.resolve();
@@ -128,7 +129,7 @@ function getReciepData($, url) {
 
                         Q.allResolved(recipesDefs)
 
-                        //Парсим контент рецептов
+                        // Парсим контент рецептов
                         .then(function() {
                             $('.rec-sposob-inst').each(function(i, block) {
                                 resultContent += '<div class="class-todo">' +
@@ -138,7 +139,7 @@ function getReciepData($, url) {
                             });
                         })
 
-                        //Пушим список ингредиентов в рецепт
+                        // Пушим список ингредиентов в рецепт
                         .then(function() {
                             recipeModel.model.findByIdAndUpdate(
                                 recipeData._id,
@@ -154,7 +155,7 @@ function getReciepData($, url) {
                                     }
                                 },
                                 function(err, data) {
-                                    if( !err ) {
+                                    if (!err) {
                                         console.log('GET: ', url);
                                         console.log('--> ', data.name, '.');
                                     } else {
@@ -172,11 +173,11 @@ function getReciepData($, url) {
                 });
             } else {
 
-                //Если нет ингредиентов
+                // Если нет ингредиентов
                 d.resolve();
             }
         } else {
-            //Значит рецепт есть.
+            // Значит рецепт есть.
             d.resolve();
         }
     });
