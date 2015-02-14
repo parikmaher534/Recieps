@@ -19,7 +19,7 @@ var grabURL = "http://www.povarenok.ru",
 
 // Просто коннект к базюльке
 ;(function() {
-    mongoose.connect('127.0.0.1', 'WantToCookTest', 27017);
+    mongoose.connect('127.0.0.1', 'WantToCook', 27017);
     mongoose.connection
         .once('open', function() {
             console.log('info', 'Mongoose was connected successfully.');
