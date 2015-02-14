@@ -1,5 +1,6 @@
 var http = require('http'),
     cheerio = require('cheerio'),
+    Iconv = require('iconv').Iconv,
     Q = require('q');
 
 
@@ -8,8 +9,16 @@ function getPageDOM(data) {
         outHTML = '';
 
     http.get(data.url, function(res) {
+        if( data.decode ) res.setEncoding('binary');
+
         res.on('data', function(chunk) {
-            outHTML += chunk.toString();
+            if( data.decode ) {
+                chunk = new Buffer(chunk, 'binary');
+                chunk = new Iconv('windows-1251', 'utf8').convert(chunk).toString();
+                outHTML += chunk;
+            } else {
+                outHTML += chunk.toString();
+            }
         });
 
         res.on('end', d.resolve);
