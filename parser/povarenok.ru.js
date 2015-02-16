@@ -25,7 +25,6 @@ var grabURL = "http://www.povarenok.ru",
             console.log('info', 'Mongoose was connected successfully.');
 
             pageToDOM.get({
-                decode: true,
                 url: grabURL + '/recipes/',
                 callback: getReciepsLinks
             });
@@ -42,12 +41,12 @@ function getReciepsLinks($) {
     ++page;
 
     $('.uno_recipie h1 a').each(function(i, a) {
+        console.log($(a).attr('href'));
         links.push($(a).attr('href'));
     });
 
     if (page <= pageMax) {
         pageToDOM.get({
-            decode: true,
             url: grabURL + '/recipes/~' + page + '/',
             callback: getReciepsLinks
         });

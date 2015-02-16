@@ -1,37 +1,33 @@
 var http = require('http'),
+    fs = require('fs'),
+    url = require('url'),
     cheerio = require('cheerio'),
     Iconv = require('iconv').Iconv,
-    Q = require('q');
+    Q = require('q'),
+    spawn = require('child_process').spawn;
+
 
 
 function getPageDOM(data) {
-    var d = Q.defer(),
-        outHTML = '';
+    var html = '';
 
-    http.get(data.url, function(res) {
-        if( data.decode ) res.setEncoding('binary');
+    var name = url.parse(data.url).path.replace(/\//g, '_');
 
-        res.on('data', function(chunk) {
-            if( data.decode ) {
-                chunk = new Buffer(chunk, 'binary');
-                chunk = new Iconv('windows-1251', 'utf8').convert(chunk).toString();
-                outHTML += chunk;
-            } else {
-                outHTML += chunk.toString();
-            }
-        });
+    var wget = spawn('wget', ['-L', '-O', './wget/' + name, '--proxy', '112.78.150.30:8080', data.url]);
 
-        res.on('end', d.resolve);
-    })
-    .on('error', d.reject);
+    wget.on('close', function(code) {
+        if (code == 0) {
+            html = fs.readFileSync('./wget/' + name);
+            html = new Iconv('windows-1251', 'utf8').convert(new Buffer(html, 'binary')).toString();
 
-    d.promise
-        .fail(getPageError)
-        .then(function() {
-            data.callback(
-                htmlToDOM(outHTML)
-            );
-        });
+            data.callback(htmlToDOM(html));
+        } else {
+            getPageError('Ошибонька: status code ', code);
+        }
+
+        console.log('Done: ', './wget/' + name);
+        fs.unlinkSync('./wget/' + name);
+    });
 };
 
 function htmlToDOM(html) {
