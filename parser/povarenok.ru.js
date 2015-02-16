@@ -25,6 +25,7 @@ var grabURL = "http://www.povarenok.ru",
             console.log('info', 'Mongoose was connected successfully.');
 
             pageToDOM.get({
+                decode: true,
                 url: grabURL + '/recipes/',
                 callback: getReciepsLinks
             });
@@ -47,6 +48,7 @@ function getReciepsLinks($) {
 
     if (page <= pageMax) {
         pageToDOM.get({
+            decode: true,
             url: grabURL + '/recipes/~' + page + '/',
             callback: getReciepsLinks
         });
@@ -59,21 +61,23 @@ function getRecipesData() {
     var defs = [];
 
     links.forEach(function(a, i) {
-        pageToDOM.get({
-            decode: true,
-            url: a,
-            callback: function($) {
-                defs.push(getReciepData($, a));
+        setTimeout(function() {
+            pageToDOM.get({
+                decode: true,
+                url: a,
+                callback: function($) {
+                    defs.push(getReciepData($, a));
 
-                // Когда все сграблено и записано в базу
-                if (i == links.length - 1) {
-                    Q.allResolved(defs).then(function() {
-                        console.log('Job Done.');
-                        process.exit();
-                    });
-                };
-            }
-        });
+                    // Когда все сграблено и записано в базу
+                    if (i == links.length - 1) {
+                        Q.allResolved(defs).then(function() {
+                            console.log('Job Done.');
+                            process.exit();
+                        });
+                    };
+                }
+            });
+        }, (i + 1) * 10000);
     });
 };
 
