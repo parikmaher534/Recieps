@@ -11,8 +11,8 @@ if (process.argv[2] && ~process.argv[2].indexOf('from')) from = process.argv[2].
 if (process.argv[3] && ~process.argv[3].indexOf('to')) to = process.argv[3].split('=')[1];
 
 var grabURL = "http://www.povarenok.ru",
-    page = from || 2,
-    pageMax = to || 3,
+    page = from || 1,
+    pageMax = to || 2,
     links = [];
 
 
@@ -24,11 +24,7 @@ var grabURL = "http://www.povarenok.ru",
         .once('open', function() {
             console.log('info', 'Mongoose was connected successfully.');
 
-            pageToDOM.get({
-                decode: true,
-                url: grabURL + '/recipes/',
-                callback: getReciepsLinks
-            });
+            getReciepsLinks();
         })
         .once('error', function(err) {
             console.log('error', 'Mongoose connection error: ', err);
@@ -39,12 +35,14 @@ var grabURL = "http://www.povarenok.ru",
 
 
 function getReciepsLinks($) {
-    ++page;
+    if( $ ) {
+        ++page;
 
-    $('.uno_recipie h1 a').each(function(i, a) {
-        console.log($(a).attr('href'));
-        links.push($(a).attr('href'));
-    });
+        $('.uno_recipie h1 a').each(function(i, a) {
+            console.log($(a).attr('href'));
+            links.push($(a).attr('href'));
+        });
+    };
 
     if (page <= pageMax) {
         pageToDOM.get({
@@ -77,7 +75,7 @@ function getRecipesData() {
                     };
                 }
             });
-        }, (i + 1) * 10000);
+        }, (i + 1) * 11000);
     });
 };
 
