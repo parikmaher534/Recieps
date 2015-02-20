@@ -1,20 +1,25 @@
-var pageToDOM = require('./pageToDOM.js');
+var pageToDOM = require('../pageToDOM.js');
     Q = require('q');
     url = require('url'),
     mongoose = require('mongoose'),
 
-    recipeModel = require('../models/Recipe.js'),
-    recipeIngredientModel = require('../models/RecipeIngredient.js');
+    recipeModel = require('../../models/Recipe.js'),
+    recipeIngredientModel = require('../../models/RecipeIngredient.js');
 
-var from, to;
-if (process.argv[2] && ~process.argv[2].indexOf('from')) from = process.argv[2].split('=')[1];
-if (process.argv[3] && ~process.argv[3].indexOf('to')) to = process.argv[3].split('=')[1];
 
-var grabURL = "http://www.povarenok.ru",
-    page = from || 1,
-    pageMax = to || 2,
+var page = 0,
+    grabURL = "http://gotovim-doma.ru",
+    categories = [
+        'http://gotovim-doma.ru/view.php?g=1',
+        'http://gotovim-doma.ru/view.php?g=2',
+        'http://gotovim-doma.ru/view.php?g=3',
+        'http://gotovim-doma.ru/view.php?g=4',
+        'http://gotovim-doma.ru/view.php?g=5',
+        'http://gotovim-doma.ru/view.php?g=6',
+        'http://gotovim-doma.ru/view.php?g=7',
+        'http://gotovim-doma.ru/view.php?g=42'
+    ],
     links = [];
-
 
 
 // Просто коннект к базюльке
@@ -24,7 +29,7 @@ var grabURL = "http://www.povarenok.ru",
         .once('open', function() {
             console.log('info', 'Mongoose was connected successfully.');
 
-            getReciepsLinks();
+            aggregateLinksFromAllCategories();
         })
         .once('error', function(err) {
             console.log('error', 'Mongoose connection error: ', err);
@@ -34,26 +39,34 @@ var grabURL = "http://www.povarenok.ru",
 
 
 
-function getReciepsLinks($) {
-    if( $ ) {
-        ++page;
+function aggregateLinksFromAllCategories($) {
+    //var defs = [];
 
-        $('.uno_recipie h1 a').each(function(i, a) {
-            console.log($(a).attr('href'));
-            links.push($(a).attr('href'));
-        });
-    };
+    //categories.forEach(function(link) {
+        // var d = Q.defer();
+        // defs.push(d.promise);
 
-    if (page <= pageMax) {
         pageToDOM.get({
+            //url: link,
             decode: true,
-            url: grabURL + '/recipes/~' + page + '/',
-            callback: getReciepsLinks
+            url: categories[0],
+            callback: function($) {
+                $('.rcplist tr td a').each(function(i, a) {
+                    links.push(grabURL + $(a).attr('href'));
+                });
+
+                //d.resolve();
+
+                getRecipesData();
+            }
         });
-    } else {
-        getRecipesData();
-    };
+    //});
+
+    // Q.allResolved(defs).then(function() {
+    //     getRecipesData();
+    // });
 };
+
 
 function getRecipesData() {
     var defs = [];
@@ -63,7 +76,7 @@ function getRecipesData() {
             pageToDOM.get({
                 decode: true,
                 url: a,
-                callback: function($) {
+                callback: function ($) {
                     defs.push(getReciepData($, a));
 
                     // Когда все сграблено и записано в базу
@@ -75,23 +88,23 @@ function getRecipesData() {
                     };
                 }
             });
-        }, (i + 1) * 11000);
+        }, 1000 * i)
     });
 };
 
 function getReciepData($, url) {
     var d = Q.defer();
 
-    var ingsQuery = $('#print_body .recipe-ing .cat');
+    var ingsQuery = $('.rcpstru');
 
     if (ingsQuery.length) {
 
         recipeModel.model.create(
         {
-            name         : $('#print_body h1 a').text(),
-            description  : $('#print_body .recipe-short span').text(),
-            photo        : $('#print_body .recipe-img img').attr('src'),
-            time         : $('#print_body .recipe-time-peaces time').text(),
+            name         : $('.rcptitle').text(),
+            description  : $('.rcpdescr').text(),
+            photo        : grabURL + $('.rcpdescr').next().find('img').attr('src'),
+            time         : null,
             linkToOrigin : url
         },
         function(err, recipeData) {
@@ -103,14 +116,16 @@ function getReciepData($, url) {
                 recipesIds = [];
                 searchIngArr = [];
 
-                ingsQuery.each(function(i, el) {
-                    var recipeDef = Q.defer();
+                ingsQuery.find('li').each(function(i, el) {
+                    var recipeDef = Q.defer(),
+                        ingred = $(el).text().split(' - ');
+
                     recipesDefs.push(recipeDef.promise);
 
                     recipeIngredientModel.model.create(
                     {
-                        amount: $(el).find('span span').text(),
-                        ingredient: $(el).find('span a span').text()
+                        amount: ingred[1],
+                        ingredient: ingred[0]
                     },
                     function(err, data) {
                         if (!err) {
@@ -123,22 +138,17 @@ function getReciepData($, url) {
                     });
                 });
 
+
                 Q.allResolved(recipesDefs)
 
                 // Парсим контент рецептов
                 .then(function() {
-                    if( $('#print_body .recipe-steps table').length ) {
-                        $('#print_body .recipe-steps table').each(function(i, block) {
-                            resultContent += '<div class="class-todo">' +
-                                                $(block).find('tr').find('td').eq(0).find('a').html() +
-                                                $(block).find('tr').find('td').eq(1).text() +
-                                             '</div>';
-                        });
-                    } else {
-                        resultContent = '<div class="class-todo">' +
-                                            $('#print_body .recipe-text').text() +
-                                        '</div>';
-                    }
+                    $('.instructions .rcptxt').each(function(i, block) {
+                        resultContent += '<div class="class-todo">' +
+                                            ($(block).prev() ? $(block).prev().html() : '') +
+                                            $(block).text() +
+                                         '</div>';
+                    });
                 })
 
                 // Пушим список ингредиентов в рецепт

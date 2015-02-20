@@ -1,18 +1,18 @@
-var pageToDOM = require('./pageToDOM.js');
+var pageToDOM = require('../pageToDOM.js');
     Q = require('q');
     url = require('url'),
     mongoose = require('mongoose'),
 
-    recipeModel = require('../models/Recipe.js'),
-    recipeIngredientModel = require('../models/RecipeIngredient.js');
+    recipeModel = require('../../models/Recipe.js'),
+    recipeIngredientModel = require('../../models/RecipeIngredient.js');
 
 var from, to;
 if (process.argv[2] && ~process.argv[2].indexOf('from')) from = process.argv[2].split('=')[1];
 if (process.argv[3] && ~process.argv[3].indexOf('to')) to = process.argv[3].split('=')[1];
 
 var grabURL = "http://www.edimdoma.ru",
-    page = from || 2,
-    pageMax = to || 3,
+    page = from || 1,
+    pageMax = to || 2,
     links = [];
 
 

@@ -19,13 +19,13 @@ function getPageDOM(data) {
     var html = '',
         name = url.parse(data.url).path.replace(/\//g, '_'),
         currentProxy = proxyList[0],
-        wget = spawn('wget', ['-L', '-S', '-O', './wget/' + name, '--proxy', currentProxy, data.url]);
+        wget = spawn('wget', ['-L', '-S', '-O', '../wget/' + name, '--proxy', currentProxy, data.url]);
 
-    console.log('wget -L -S -O ./wget/' + name + ' --proxy ' + currentProxy + ' ' + data.url);
+    console.log('wget -L -S -O ../wget/' + name + ' --proxy ' + currentProxy + ' ' + data.url);
 
     wget.on('close', function(code) {
         if (code == 0) {
-            html = fs.readFileSync('./wget/' + name);
+            html = fs.readFileSync('../wget/' + name);
 
             if (data.decode) {
                 html = new Iconv('windows-1251', 'utf8').convert(new Buffer(html, 'binary')).toString();
@@ -42,8 +42,8 @@ function getPageDOM(data) {
             }, 10000);
         }
 
-        console.log('Done: ', './wget/' + name);
-        fs.unlinkSync('./wget/' + name);
+        console.log('Done: ', '../wget/' + name);
+        //fs.unlinkSync('../wget/' + name);
     });
 };
 
