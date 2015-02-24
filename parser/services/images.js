@@ -29,7 +29,7 @@ function getImages() {
     recipeModel.model
         .find()
         .exec(function(err, docs) {
-            docs.slice(0,10).forEach(function(doc) {
+            docs.forEach(function(doc) {
                 var $ = cheerio.load(doc.content),
                     imgs = [doc.photo];
 
