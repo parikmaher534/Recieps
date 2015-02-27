@@ -43,7 +43,7 @@ function getPageDOM(data) {
         }
 
         console.log('Done: ', '../wget/' + name);
-        //fs.unlinkSync('../wget/' + name);
+        fs.unlinkSync('../wget/' + name);
     });
 };
 
