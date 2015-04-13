@@ -31,7 +31,7 @@ function getImages() {
         .exec(function(err, docs) {
             docs.forEach(function(doc, j) {
                 setTimeout(function() {
-                    var $ = cheerio.load(doc.content),
+                    var $ = cheerio.load(doc.content || ''),
                         imgs = [doc.photo];
 
                     $('img').each(function(i, img) {
