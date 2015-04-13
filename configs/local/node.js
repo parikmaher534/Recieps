@@ -1,4 +1,4 @@
-var port = process.env.WEB_PORT || process.env.PORT || 3000;
+var port = process.env.WEB_PORT || process.env.PORT || 3333;
 
 module.exports = {
     project: {
@@ -17,7 +17,7 @@ module.exports = {
 
     owner : {
         name : 'Nick',
-        email : 'kolya.p@speedandfunction.com'
+        email : 'parikmaher534@gmail.com'
     },
 
     smtpOptions : {

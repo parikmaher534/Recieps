@@ -29,21 +29,23 @@ function getImages() {
     recipeModel.model
         .find()
         .exec(function(err, docs) {
-            docs.forEach(function(doc) {
-                var $ = cheerio.load(doc.content),
-                    imgs = [doc.photo];
+            docs.forEach(function(doc, j) {
+                setTimeout(function() {
+                    var $ = cheerio.load(doc.content),
+                        imgs = [doc.photo];
 
-                $('img').each(function(i, img) {
-                    imgs.push($(img).attr('src'));
-                });
+                    $('img').each(function(i, img) {
+                        imgs.push($(img).attr('src'));
+                    });
 
-                imgs.forEach(function(src, i) {
-                    setTimeout(function() {
-                        download(src, src.split('/').pop(), function(){
-                            console.log(src, ' done downloading...');
-                        });
-                    }, 2000 * i);
-                });
+                    imgs.forEach(function(src, i) {
+                        setTimeout(function() {
+                            download(src, src.split('/').pop(), function(){
+                                console.log(src, ' done downloading...');
+                            });
+                        }, 1000 * i);
+                    });
+                }, 1000 * j);
             });
         }) ;
 };
