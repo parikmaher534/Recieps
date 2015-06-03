@@ -1,5 +1,4 @@
-var RECIPES;
-
+var RECIEPS_OFFSET = 10;
 
 function prepareRecipes(data, tempArr, ingredients) {
     var approximate,
@@ -8,7 +7,7 @@ function prepareRecipes(data, tempArr, ingredients) {
     // Перебираем все рецепты
     for (var i = 0; i < data.length; i++) {
 
-        // Если в рецепте ингредиентов меньше или равно кол-ву ингреиентов в холодильнике
+        // Если в рецепте ингредиентов меньше или равно кол-ву ингредиентов в холодильнике
         if (data[i].search.length <= tempArr.length) {
             var status = 0;
 
@@ -23,11 +22,11 @@ function prepareRecipes(data, tempArr, ingredients) {
             if (status != -1) {
                 result.push(data[i]);
 
-            // Если точный совпадений нет, то ищем приближения
+            // Если точных совпадений нет, то ищем приближения
             } else {
                 data[i] = data[i].toJSON();
 
-                // Устанавливаем вес рецепта, для сортровки по наилучшему совпадению
+                // Устанавливаем вес рецепта, для сортировки по наилучшему совпадению
                 data[i].weight = 0;
                 data[i].aproxIngs = [];
 
@@ -54,13 +53,24 @@ function prepareRecipes(data, tempArr, ingredients) {
         };
     });
 
-    // По-умолчанию показываем первые 10 лучших совпадений
-    approximate = data.slice(0, 10).map(function(item) {
+    // По-умолчанию показываем первые 'RECIEPS_OFFSET' лучших совпадений
+    approximate = data.slice(0, RECIEPS_OFFSET).map(function(item) {
+
+        // Выделяем нехватающие элементы
+        var other = [];
+
+        item.search.forEach(function(searchItem) {
+            if (item.aproxIngs.indexOf(searchItem) == -1) {
+                other.push(searchItem);
+            };
+        });
+
         return {
             url: item.linkToOrigin,
             name: item.name,
             aprox: item.aproxIngs,
-            ingredients: item.search
+            ingredients: item.search,
+            other: other
         };
     });
 
