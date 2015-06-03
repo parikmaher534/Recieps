@@ -1,12 +1,10 @@
 var fs = require('fs');
-    pathToPageHTML = 'public/frontend/desktop.bundles/index/index.html',
-    errorPageHTML = 'public/frontend/desktop.bundles/index/error.html';
+    pathToPageHTML = 'public/view/index.html',
+    errorPageHTML = 'public/view/error.html';
 
 var words = {
     very_bad : 'Всё очень плохо...'
 };
-
-
 
 /* Тут читаем с файловой системы собранный html основного лайута и отдаем на отрисовку */
 function getPageHTML(callback) {
