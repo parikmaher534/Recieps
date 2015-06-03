@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    recipeModel = require('../../models/Recipe.js');
+    recipeModel = require('../../models/Recipe.js'),
+    ingredientModel = require('../../models/RecipeIngredient.js');
 
 
 ;(function (){
@@ -15,5 +16,37 @@ var mongoose = require('mongoose'),
 }());
 
 function findDublicates() {
+    console.log('Start find dublicates...');
 
+    recipeModel.model
+        .find()
+        .exec(function(error, data) {
+            data.forEach(function(recipe) {
+                var search = [];
+
+                recipe.search.forEach(function(ing) {
+                    if (search.indexOf(ing) == -1) {
+                        search.push(ing);
+                    }
+                });
+
+                ;(function(recipe) {
+                    recipeModel.model.update(
+                        {
+                            _id: recipe._id
+                        },
+                        {
+                            search: search
+                        },
+                        function(err, data) {
+                            if (!err) {
+                                console.log(recipe.name, ' is done...');
+                            } else {
+                                console.log(recipe.name, ' dublicates remove error...');
+                            }
+                        }
+                    );
+                }(recipe));
+            });
+        });
 };
