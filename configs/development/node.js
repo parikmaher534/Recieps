@@ -1,4 +1,4 @@
-var port = process.env.WEB_PORT || process.env.PORT || 3333;
+process.env.PORT = process.env.WEB_PORT || process.env.PORT || 3003;
 
 module.exports = {
     project: {
@@ -12,7 +12,7 @@ module.exports = {
     },
 
     web: {
-        port: port
+        port: process.env.PORT
     },
 
     owner : {
