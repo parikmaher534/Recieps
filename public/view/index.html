@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <link href="/css/common.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body>
+        <header></header>
+
+        <h1 class="title">Найти рецепт</h1>
+
+        <div class="form">
+            <div class="ingredients-label">Введите список игредиентов которые у вас есть.</div>
+            <input type="text" class="ingredient-autocomplete" value="мука, соль, молоко, сахар"/>
+
+            <div class="ingredients-note">перечисляйте через запятую (мука, соль, молоко, сахар)</div>
+
+            <div class="button search-button">Мне повезет</div>
+        </div>
+
+        <div class="results"></div>
+
+        <div class="templates"></div>
+
+        <script src="/js/vendors/handlebars-v3.0.3.js"></script>
+        <script src="/js/vendors/jquery-2.1.4.min.js"></script>
+        <script src="/js/vendors/helpers.js"></script>
+        <script src="/js/init.js"></script>
+    </body>
+</html>

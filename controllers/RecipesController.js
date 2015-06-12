@@ -1,4 +1,4 @@
-var RECIEPS_OFFSET = 10;
+var RECIEPS_OFFSET = 100;
 
 function prepareRecipes(data, tempArr, ingredients) {
     var approximate,
@@ -49,7 +49,8 @@ function prepareRecipes(data, tempArr, ingredients) {
     result = result.map(function(item) {
         return {
             name: item.name,
-            ingredients: item.search
+            ingredients: item.search,
+            all: item
         };
     });
 
@@ -60,7 +61,10 @@ function prepareRecipes(data, tempArr, ingredients) {
         var other = [];
 
         item.search.forEach(function(searchItem) {
-            if (item.aproxIngs.indexOf(searchItem) == -1) {
+            if (
+                item.aproxIngs &&
+                item.aproxIngs.indexOf(searchItem) == -1
+            ) {
                 other.push(searchItem);
             };
         });
@@ -70,7 +74,8 @@ function prepareRecipes(data, tempArr, ingredients) {
             name: item.name,
             aprox: item.aproxIngs,
             ingredients: item.search,
-            other: other
+            other: other,
+            all: item
         };
     });
 
@@ -88,7 +93,10 @@ module.exports = {
             ingredients = req.query.ingredients,
             tempArr;
 
-        if (ingredients) {
+        if (
+            ingredients &&
+            typeof ingredients == 'string'
+        ) {
             tempArr = ingredients.split(',');
 
             models.Recipe.find(

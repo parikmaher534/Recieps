@@ -1,0 +1,129 @@
+*
+{
+    margin: 0;
+    padding: 0;
+
+    font-size: 100%;
+    line-height: 1;
+}
+
+body
+{
+    max-width: 800px;
+
+    margin: 0 auto;
+
+    box-shadow: 0 0 15px #CCC;
+}
+
+header
+{
+    height: 166px;
+
+    background-image: url(/img/header.png);
+}
+
+.title
+{
+    margin: 20px 0;
+
+    text-align: center;
+    text-transform: uppercase;
+    font-family: Arial;
+}
+
+.ingredient-autocomplete
+{
+    display: block;
+
+    width: 300px;
+    height: 40px;
+
+    margin: 10px auto 0 auto;
+    padding: 10px;
+}
+
+.ingredients-label
+{
+  text-align: center;
+  color: #666;
+}
+
+.ingredients-note
+{
+  margin-left: 250px;
+  font-size: 12px;
+  color: #999;
+}
+
+.button
+{
+  display: inline-block;
+  padding: 8px 15px;
+
+  margin-left: 250px;
+  margin-top: 20px;
+
+  background: #EEE;
+  border: 1px solid #CCC;
+  cursor: pointer;
+}
+
+.search-button:hover
+{
+  background: #E8E8E8;
+}
+
+
+
+.recipe-item
+{
+  position: relative;
+
+  margin: 10px;
+  padding: 10px;
+
+  box-shadow: 0 0 10px #CCC;
+  border-radius: 4px;
+  background-color: #F9F7F7;
+}
+
+.recipe-image-wrapper
+{
+  display: inline-block;
+
+  width: 80px;
+  margin-right: 10px;
+
+  text-align: center;
+  background-color: #FFF;
+}
+
+.recipe-image
+{
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.recipe-name
+{
+  display: inline-block;
+
+  vertical-align: top;
+  font-family: Arial;
+  font-size: 14px;
+}
+
+.recipe-origin
+{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
+
+
+
+
+

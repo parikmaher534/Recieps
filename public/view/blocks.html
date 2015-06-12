@@ -1,0 +1,15 @@
+<script id="recipe-item" type="text/x-handlebars-template">
+    <div class="recipe-item" data-id="{{all._id}}">
+        <div class="recipe-image-wrapper">
+            <img src="{{all.photo}}" class="recipe-image"/>
+        </div>
+
+        <h4 class="recipe-name">{{name}}</h4>
+
+        <a class="recipe-origin" href="{{all.linkToOrigin}}">Ссылка на оригинал</a>
+
+        <div class="recipe-description">{{text}}</div>
+
+        <div class="recipe-full">Показать весь рецепт</div>
+    </div>
+</script>

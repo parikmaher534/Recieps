@@ -1,19 +1,10 @@
 node_modules
-vendor
 .DS_Store
 .settings
 .project
-.bem/cache
-.bem/snapshots
-desktop.bundles/*/*.*
-!desktop.bundles/*/index.bemjson.js
-!desktop.bundles/.bem/*
 sftp-config.json
 *.sublime-project
 *.sublime-workspace
 server.log
-.borschik
-public/frontend/.bem/cache
-public/frontend/desktop.bundles/*/*.*
-!public/frontend/desktop.bundles/*/*.bemjson.js
+public/temp
 
