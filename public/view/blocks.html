@@ -1,15 +1,29 @@
 <script id="recipe-item" type="text/x-handlebars-template">
-    <div class="recipe-item" data-id="{{all._id}}">
-        <div class="recipe-image-wrapper">
-            <img src="{{all.photo}}" class="recipe-image"/>
+    <div class="recipe-item table" data-id="{{all._id}}">
+        <div class="table-cell valign_m">
+            <div class="recipe-image-wrapper">
+                <img src="{{all.photo}}" class="recipe-image"/>
+            </div>
         </div>
 
-        <h4 class="recipe-name">{{name}}</h4>
+        <div class="table-cell">
+            <h4 class="recipe-name">{{name}}</h4>
 
-        <a class="recipe-origin" href="{{all.linkToOrigin}}">Ссылка на оригинал</a>
+            <div class="recipe-description">{{text}}</div>
 
-        <div class="recipe-description">{{text}}</div>
+            <div class="recipe-full">Показать весь рецепт</div>
 
-        <div class="recipe-full">Показать весь рецепт</div>
+            <!--a class="link recipe-origin" href="{{all.linkToOrigin}}">Ссылка на оригинал</a-->
+        </div>
+    </div>
+</script>
+
+<script id="recipe-item-view" type="text/x-handlebars-template">
+    <div class="recipe-item-view" data-id="{{_id}}">
+        <h4 class="recipe-item-view-name">{{name}}</h4>
+
+        <div class="recipe-item-view-description">{{description}}</div>
+
+        <div class="recipe-item-view-content table">{{{content}}}</div>
     </div>
 </script>

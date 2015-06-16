@@ -1,24 +1,31 @@
 $(function() {
-    var search = $('.ingredient-autocomplete');
+    var search = $('.ingredient-autocomplete'),
+        searchButtonWrapper = $('.button__wrapper'),
+        searchButton = $('.search-button'),
+        results = $('.results');
 
-    loadTemplates();
+
+    _loadTemplates();
 
 
-    $('.search-button').on('click', _searchRecipes);
+    searchButton.on('click', _searchRecipes);
 
 
     function _searchRecipes() {
+        _lockButton();
+
         $.ajax({
             type: 'GET',
             url: '.recipes',
-            data: getData(),
+            data: _getData(),
             dataType: 'json',
             success: _onGetRecipes,
-            error: _onGetRecipesError
+            error: _onGetRecipesError,
+            complete: _unlockButton
         });
     };
 
-    function getData() {
+    function _getData() {
         var arr = null,
             val = search.val().trim();
 
@@ -34,17 +41,31 @@ $(function() {
     };
 
     function _onGetRecipes(res) {
+        _clearResults();
         _buildAccuratedRecipes(res.accurated);
     };
 
+    function _clearResults() {
+        $('.results').empty();
+    };
+
+    function _lockButton() {
+        searchButtonWrapper.addClass('buttons__disabled');
+    };
+
+    function _unlockButton() {
+        searchButtonWrapper.removeClass('buttons__disabled');
+    };
+
     function _buildAccuratedRecipes(recipes) {
-        var source = $("#recipe-item").html(),
+        var maxLn = 100,
+            source = $("#recipe-item").html(),
             template = Handlebars.compile(source);
 
         recipes.forEach(function(recipe) {
             var text = $(recipe.all.content).text();
 
-            if (text.length > 100) text = text.substr(0, 200) + '...';
+            if (text.length > maxLn) text = text.substr(0, maxLn) + '...';
 
             recipe.text = text;
 
@@ -52,9 +73,11 @@ $(function() {
         });
     };
 
-    function _onGetRecipesError() { /* TODO */ };
+    function _onGetRecipesError(error) {
+        console.error(error);
+    };
 
-    function loadTemplates() {
+    function _loadTemplates() {
         $(function(){
             $(".templates").load("/view/blocks.html");
         });

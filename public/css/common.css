@@ -36,7 +36,7 @@ header
 {
     display: block;
 
-    width: 300px;
+    width: 600px;
     height: 40px;
 
     margin: 10px auto 0 auto;
@@ -51,18 +51,21 @@ header
 
 .ingredients-note
 {
-  margin-left: 250px;
+  margin-left: 100px;
   font-size: 12px;
   color: #999;
+}
+
+.button__wrapper
+{
+  margin-left: 100px;
+  margin-top: 20px;
 }
 
 .button
 {
   display: inline-block;
   padding: 8px 15px;
-
-  margin-left: 250px;
-  margin-top: 20px;
 
   background: #EEE;
   border: 1px solid #CCC;
@@ -74,18 +77,42 @@ header
   background: #E8E8E8;
 }
 
+.search-spinner
+{
+  display: none;
 
+  margin-left: 10px;
+}
+
+.buttons__disabled .button
+{
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.buttons__disabled .spinner
+{
+  display: inline-block;
+}
+
+.results
+{
+  padding: 20px;
+}
 
 .recipe-item
 {
+  display: inline-block;
   position: relative;
 
+  width: 44%;
   margin: 10px;
   padding: 10px;
 
   box-shadow: 0 0 10px #CCC;
   border-radius: 4px;
   background-color: #F9F7F7;
+  vertical-align: top;
 }
 
 .recipe-image-wrapper
@@ -93,7 +120,7 @@ header
   display: inline-block;
 
   width: 80px;
-  margin-right: 10px;
+  margin-right: 15px;
 
   text-align: center;
   background-color: #FFF;
@@ -107,7 +134,7 @@ header
 
 .recipe-name
 {
-  display: inline-block;
+  margin-bottom: 5px;
 
   vertical-align: top;
   font-family: Arial;
@@ -116,10 +143,79 @@ header
 
 .recipe-origin
 {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-family: Arial;
 }
+
+.recipe-description
+{
+  margin: 5px 0;
+
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.recipe-full
+{
+  display: inline-block;
+
+  padding: 3px 10px;
+
+  font-family: Arial;
+  font-size: 14px;
+  background-color: #EAEAEA;
+  cursor: pointer;
+}
+
+.recipe-item-view
+{
+  padding: 10px;
+
+  background-color: #EEE;
+  box-shadow: 0 0 10px #CCC;
+  font-family: Arial;
+}
+
+.recipe-item-view-name
+{
+  padding: 10px 0;
+
+  text-transform: uppercase;
+}
+
+.recipe-item-view-description
+{
+  padding: 10px;
+  margin-bottom: 20px;
+
+  font-size: 15px;
+  line-height: 1.3;
+  background-color: #FAFAFA;
+}
+
+.recipe-item-view-content .class-todo
+{
+  display: table-row;
+  margin: 10px 0;
+  float: left;
+
+  font-family: Arial;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.recipe-item-view-content .class-todo img
+{
+  float: left;
+
+  margin-right: 10px;
+}
+
+
+
+
 
 
 

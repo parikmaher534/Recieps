@@ -1,4 +1,4 @@
-var RECIEPS_OFFSET = 100;
+var RECIEPS_OFFSET = 10;
 
 function prepareRecipes(data, tempArr, ingredients) {
     var approximate,

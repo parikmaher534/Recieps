@@ -1,0 +1,25 @@
+.disabled
+{
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.table
+{
+    display: table;
+}
+
+.table-cell
+{
+    display: table-cell;
+}
+
+.link
+{
+    color: rgb(58, 121, 237);
+}
+
+.valign_m
+{
+    vertical-align: middle;
+}

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <link href="/css/lib.css" type="text/css" rel="stylesheet" />
         <link href="/css/common.css" type="text/css" rel="stylesheet" />
     </head>
     <body>
@@ -13,7 +14,12 @@
 
             <div class="ingredients-note">перечисляйте через запятую (мука, соль, молоко, сахар)</div>
 
-            <div class="button search-button">Мне повезет</div>
+            <div class="button__wrapper">
+                <div class="button search-button">Мне повезет</div>
+                <div class="spinner search-spinner valign_m">
+                    <img src="/img/ajax-loader.gif" />
+                </div>
+            </div>
         </div>
 
         <div class="results"></div>
@@ -24,5 +30,6 @@
         <script src="/js/vendors/jquery-2.1.4.min.js"></script>
         <script src="/js/vendors/helpers.js"></script>
         <script src="/js/init.js"></script>
+        <script src="/js/recipe.js"></script>
     </body>
 </html>
