@@ -1,6 +1,6 @@
 <script id="recipe-item" type="text/x-handlebars-template">
     <div class="recipe-item table" data-id="{{all._id}}">
-        <div class="table-cell valign_m">
+        <div class="table-cell valign_t">
             <div class="recipe-image-wrapper">
                 <img src="{{all.photo}}" class="recipe-image"/>
             </div>
@@ -20,6 +20,10 @@
 
 <script id="recipe-item-view" type="text/x-handlebars-template">
     <div class="recipe-item-view" data-id="{{_id}}">
+        <div class="recipe-close">
+            <i class="fa fa-close"></i>
+        </div>
+
         <h4 class="recipe-item-view-name">{{name}}</h4>
 
         <div class="recipe-item-view-description">{{description}}</div>

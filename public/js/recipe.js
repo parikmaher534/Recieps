@@ -33,35 +33,35 @@ $(function() {
     };
 
     function _onGetRecipe(res) {
-        if (!$('.recipe-item-view').length) {
-            _createRecipeView(res);
-        } else {
-            _updateRecipeView(res);
-        }
+        $('.recipe-item-view').remove();
+
+        _currentRecipe.find('.recipe-full').hide();
+
+        _createRecipeView(res);
     };
 
     function _createRecipeView(res) {
         _recipeTmplSrc = $("#recipe-item-view").html();
         _recipeTemplate = Handlebars.compile(_recipeTmplSrc);
-        _currentRecipe.after(_recipeTemplate(res));
+
+        if (_currentRecipe.index() % 2 == 0) {
+            _currentRecipe.next().after(_recipeTemplate(res));
+        } else {
+            _currentRecipe.after(_recipeTemplate(res));
+        }
 
         _recipeBlock = $('.recipe-item-view');
         _recipeBlockNAME = $('.recipe-item-view-name');
         _recipeBlockDESCRIPTION = $('.recipe-item-view-description');
         _recipeBlockCONTENT = $('.recipe-item-view-content');
+
+        $('.recipe-close').on('click', _onReciewViewHide);
     };
 
-    function _updateRecipeView(res) {
-        // TODO: this
-        if (_currentRecipe.index() % 2 == 0) {
-            _currentRecipe.next().after(_recipeBlock);
-        } else {
-            _currentRecipe.after(_recipeBlock);
-        }
+    function _onReciewViewHide(e) {
+        _currentRecipe.find('.recipe-full').show();
 
-        _recipeBlockNAME.text(res.name);
-        _recipeBlockDESCRIPTION.text(res.description);
-        _recipeBlockCONTENT.html(res.content);
+        _recipeBlock.hide();
     };
 
     function _onGetRecipeError(error) {
