@@ -11,6 +11,25 @@
 
             <div class="recipe-description">{{text}}</div>
 
+            {{#if accurated}}
+                <div class="recipe-ingredients">
+                    {{#each ingredients}}
+                        <span>{{this}}</span>
+                    {{/each}}
+                </div>
+            {{else}}
+                <div class="recipe-ingredients">
+                    {{#each aprox}}
+                        <span class="recipe-ingredients-aprox">{{this}}</span>
+                    {{/each}}
+                    {{#each other}}
+                        <span class="recipe-ingredients-other">{{this}}</span>
+                    {{/each}}
+                </div>
+            {{/if}}
+
+            <div class="clear"></div>
+
             <div class="recipe-full">Показать весь рецепт</div>
 
             <!--a class="link recipe-origin" href="{{all.linkToOrigin}}">Ссылка на оригинал</a-->

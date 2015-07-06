@@ -97,6 +97,8 @@ header
 
 .results
 {
+  display: none;
+
   padding: 20px;
 }
 
@@ -161,6 +163,7 @@ header
 {
   display: inline-block;
 
+  margin-top: 10px;
   padding: 3px 10px;
 
   font-family: Arial;
@@ -225,11 +228,35 @@ header
   cursor: pointer;
 }
 
+.results-title
+{
+  padding: 10px 0;
 
+  font-family: Arial;
+  font-weight: normal;
+}
 
+.recipe-ingredients
+{
+  margin: 10px 0 5px 0;
+}
 
+.recipe-ingredients span
+{
+  float: left;
 
+  margin: 2px 2px 2px 0;
+  padding: 3px;
 
+  font-size: 11px;
+  font-family: Arial;
+  background-color: #EDECEC;
+}
+
+span.recipe-ingredients-aprox
+{
+  background-color: #DDDCC4;
+}
 
 
 

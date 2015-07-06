@@ -43,10 +43,12 @@ $(function() {
     function _onGetRecipes(res) {
         _clearResults();
         _buildAccuratedRecipes(res.accurated);
+        _buildApproximateRecipes(res.approximate);
     };
 
     function _clearResults() {
-        $('.results').empty();
+        $('.results').show();
+        $('.results-approximate, .results-accurated').empty();
     };
 
     function _lockButton() {
@@ -68,8 +70,26 @@ $(function() {
             if (text.length > maxLn) text = text.substr(0, maxLn) + '...';
 
             recipe.text = text;
+            recipe.accurated = true;
 
-            $('.results').append(template(recipe));
+            $('.results-accurated').append(template(recipe));
+        });
+    };
+
+    function _buildApproximateRecipes(recipes) {
+        var maxLn = 100,
+            source = $("#recipe-item").html(),
+            template = Handlebars.compile(source);
+
+        recipes.forEach(function(recipe) {
+            var text = $(recipe.all.content).text();
+
+            if (text.length > maxLn) text = text.substr(0, maxLn) + '...';
+
+            recipe.text = text;
+            recipe.approximate = true;
+
+            $('.results-approximate').append(template(recipe));
         });
     };
 
