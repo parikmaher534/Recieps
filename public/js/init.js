@@ -1,5 +1,8 @@
 $(function() {
-    var search = $('.ingredient-autocomplete'),
+    var OFFSET = 0,
+        LIMIT = 10,
+
+        search = $('.ingredient-autocomplete'),
         searchButtonWrapper = $('.button__wrapper'),
         searchButton = $('.search-button'),
         results = $('.results');
@@ -36,11 +39,15 @@ $(function() {
         });
 
         return {
+            offset: OFFSET,
+            limit: LIMIT,
             ingredients: arr.join(',')
         };
     };
 
     function _onGetRecipes(res) {
+        OFFSET += LIMIT;
+
         _clearResults();
         _buildAccuratedRecipes(res.accurated);
         _buildApproximateRecipes(res.approximate);

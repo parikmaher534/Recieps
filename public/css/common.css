@@ -233,7 +233,8 @@ header
   padding: 10px 0;
 
   font-family: Arial;
-  font-weight: normal;
+  font-weight: bold;
+  text-align: center;
 }
 
 .recipe-ingredients

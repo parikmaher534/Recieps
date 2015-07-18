@@ -91,6 +91,7 @@ module.exports = {
     init: function(req, res, next) {
         var query = null,
             ingredients = req.query.ingredients,
+            params = req.query,
             tempArr;
 
         if (
@@ -99,23 +100,25 @@ module.exports = {
         ) {
             tempArr = ingredients.split(',');
 
-            models.Recipe.find(
-            {
+            models.Recipe
+            .find({
                 search: {
                     $in: tempArr
                 },
                 $where: 'this.search.length <= ' + tempArr.length
-            },
-            function(err, data) {
+            })
+            .exec(
+                function(err, data) {
 
-                if (!err) {
-                    res.send(prepareRecipes(data, tempArr, ingredients));
-                } else {
-                    res.send({
-                        error: 'Can\'t get recipes.'
-                    });
+                    if (!err) {
+                        res.send(prepareRecipes(data, tempArr, ingredients, params));
+                    } else {
+                        res.send({
+                            error: 'Can\'t get recipes.'
+                        });
+                    }
                 }
-            });
+            );
 
         } else {
             res.send({});
