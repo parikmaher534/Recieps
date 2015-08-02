@@ -104,12 +104,10 @@ module.exports = {
             .find({
                 search: {
                     $in: tempArr
-                },
-                $where: 'this.search.length <= ' + tempArr.length
+                }
             })
             .exec(
                 function(err, data) {
-
                     if (!err) {
                         res.send(prepareRecipes(data, tempArr, ingredients, params));
                     } else {
