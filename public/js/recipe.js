@@ -15,8 +15,15 @@ $(function() {
             parent = el.closest('.recipe-full');
 
         if (parent.length) {
+            
+            // Перед тем как открыть описание другого рецепта,
+            // показываем кнопку предыдущего
+            if (_currentRecipe && _currentRecipe.length) {
+                _currentRecipe.find('.recipe-full').show();
+            }
+
             _currentRecipe = parent.closest('.recipe-item');
-            id = _currentRecipe.data('id');
+            id             = _currentRecipe.data('id');
 
             $.ajax({
                 type: 'GET',
@@ -27,7 +34,6 @@ $(function() {
                 dataType: 'json',
                 success: _onGetRecipe,
                 error: _onGetRecipeError
-                //complete: _unlockButton
             });
         }
     };
