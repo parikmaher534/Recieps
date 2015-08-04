@@ -1,4 +1,5 @@
-var RECIEPS_OFFSET = 10;
+var RECIEPS_LIMIT = 10,
+    TOTAL_AMOUNT = 0;
 
 function prepareRecipes(data, tempArr, ingredients) {
     var approximate,
@@ -45,8 +46,10 @@ function prepareRecipes(data, tempArr, ingredients) {
         return b.weight - a.weight;
     });
 
+    TOTAL_AMOUNT = result.length;
+
     // Готовим данные для короткой выдачи
-    result = result.map(function(item) {
+    result = result.slice(0, RECIEPS_LIMIT).map(function(item) {
         return {
             name: item.name,
             ingredients: item.search,
@@ -55,7 +58,7 @@ function prepareRecipes(data, tempArr, ingredients) {
     });
 
     // По-умолчанию показываем первые 'RECIEPS_OFFSET' лучших совпадений
-    approximate = data.slice(0, RECIEPS_OFFSET).map(function(item) {
+    approximate = data.slice(0, RECIEPS_LIMIT).map(function(item) {
 
         // Выделяем нехватающие элементы
         var other = [];
@@ -81,7 +84,10 @@ function prepareRecipes(data, tempArr, ingredients) {
 
     return JSON.stringify({
                 accurated: result,
-                approximate: approximate
+                approximate: approximate,
+                paginator: {
+                    total: TOTAL_AMOUNT
+                }
             });
 };
 
@@ -94,18 +100,22 @@ module.exports = {
             params = req.query,
             tempArr;
 
+        if (params && params.limit) RECIEPS_LIMIT = params.limit;
+
         if (
             ingredients &&
             typeof ingredients == 'string'
         ) {
             tempArr = ingredients.split(',');
 
-            models.Recipe
-            .find({
-                search: {
-                    $in: tempArr
+            models.Recipe.find(
+                {
+                    search: {
+                        $in: tempArr
+                    },
+                    $where: 'this.search.length <= ' + tempArr.length
                 }
-            })
+            )
             .exec(
                 function(err, data) {
                     if (!err) {
