@@ -57,8 +57,8 @@ function prepareRecipes(data, tempArr, ingredients) {
         };
     });
 
-    // По-умолчанию показываем первые 'RECIEPS_OFFSET' лучших совпадений
-    approximate = data.slice(0, RECIEPS_LIMIT).map(function(item) {
+    // По-умолчанию показываем первые 'RECIEPS_LIMIT / 2' лучших совпадений
+    approximate = data.slice(0, RECIEPS_LIMIT / 2).map(function(item) {
 
         // Выделяем нехватающие элементы
         var other = [];

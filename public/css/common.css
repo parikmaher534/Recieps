@@ -259,6 +259,8 @@ span.recipe-ingredients-aprox
 
 .results-accurated
 {
+  display: none;
+
   width: 60%;
   padding-right: 15px;
 }
@@ -305,10 +307,17 @@ span.recipe-ingredients-aprox
   float: right;
 }
 
-.searched .titles 
+.searched .titles
 {
   display: block;
 }
+
+.searched .results-accurated
+{
+  display: table-cell;
+}
+
+
 
 
 

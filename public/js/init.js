@@ -1,6 +1,6 @@
 $(function() {
     var OFFSET = 0,
-        LIMIT = 30,
+        LIMIT = 10,
         body = $('body'),
         search = $('.ingredient-autocomplete'),
         searchButtonWrapper = $('.button__wrapper'),
