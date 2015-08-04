@@ -29,7 +29,7 @@ function findDublicates() {
                     // Чистим имена от последствий парсинга
                     if (/(Варианты рецепта).+/.test(recipe.name)) {
                         recipe.name = recipe.name.replace(/(Варианты рецепта).+/, '');
-                        console.log('Очиста: ', originName,' -> ', recipe.name);
+                        console.log('Очистка: ', originName,' -> ', recipe.name);
                     }
 
                     recipeModel.model.update(
