@@ -1,7 +1,7 @@
 $(function() {
     var OFFSET = 0,
-        LIMIT = 6,
-
+        LIMIT = 30,
+        body = $('body'),
         search = $('.ingredient-autocomplete'),
         searchButtonWrapper = $('.button__wrapper'),
         searchButton = $('.search-button'),
@@ -48,13 +48,22 @@ $(function() {
     function _onGetRecipes(res) {
         OFFSET += LIMIT;
 
+        _searched();
         _clearResults();
+        
         _buildAccuratedRecipes(res.accurated);
         _buildApproximateRecipes(res.approximate);
     };
 
+    function _searched() {
+        body.addClass('searched');
+    };
+
+    function _unsearched() {
+        body.removeClass('searched');
+    };
+
     function _clearResults() {
-        $('.results').show();
         $('.results-approximate, .results-accurated').empty();
     };
 

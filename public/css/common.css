@@ -9,10 +9,6 @@
 
 body
 {
-    max-width: 800px;
-
-    margin: 0 auto;
-
     box-shadow: 0 0 15px #CCC;
 }
 
@@ -32,6 +28,12 @@ header
     font-family: Arial;
 }
 
+.form
+{
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 .ingredient-autocomplete
 {
     display: block;
@@ -45,20 +47,17 @@ header
 
 .ingredients-label
 {
-  text-align: center;
   color: #666;
 }
 
 .ingredients-note
 {
-  margin-left: 100px;
   font-size: 12px;
   color: #999;
 }
 
 .button__wrapper
 {
-  margin-left: 100px;
   margin-top: 20px;
 }
 
@@ -97,8 +96,7 @@ header
 
 .results
 {
-  display: none;
-
+  width: 100%;
   padding: 20px;
 }
 
@@ -107,7 +105,7 @@ header
   display: inline-block;
   position: relative;
 
-  width: 44%;
+  width: 21%;
   margin: 10px;
   padding: 10px;
 
@@ -156,7 +154,7 @@ header
   margin: 5px 0;
 
   font-size: 14px;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .recipe-full
@@ -258,6 +256,62 @@ span.recipe-ingredients-aprox
 {
   background-color: #DDDCC4;
 }
+
+.results-accurated
+{
+  width: 60%;
+  padding-right: 15px;
+}
+
+.results-accurated .recipe-item
+{
+  width: 44%;
+}
+
+.results-approximate
+{
+  width: 40%;
+  padding-left: 15px;
+
+  border-left: 1px solid #CCC;
+}
+
+.results-title__approximate
+{
+  width: 40%;
+  
+  float: right;
+
+  text-align: center;
+}
+
+.results-approximate .recipe-item
+{
+  width: 92%;
+
+  padding-bottom: 10px;
+
+  background-color: #FFF;
+  box-shadow: none;
+  border-bottom: 1px solid #EEE;
+}
+
+.titles
+{
+  display: none;
+
+  width: 100%;
+
+  float: right;
+}
+
+.searched .titles 
+{
+  display: block;
+}
+
+
+
 
 
 
