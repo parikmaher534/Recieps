@@ -50,3 +50,18 @@
         <div class="recipe-item-view-content table">{{{content}}}</div>
     </div>
 </script>
+
+<script id="paginator" type="text/x-handlebars-template">
+    <div class="paginator">
+        <ul class="paginator-wrapper">{{{content}}}</ul>
+    </div>
+</script>
+
+<script id="paginator-item" type="text/x-handlebars-template">
+    <li class="paginator-tem {{#if iscurrent}}paginator-current{{/if}}">
+        <a href="#page-{{num}}" class="paginator-item__pseudo-link" data-num="{{num}}">
+            <span>{{num}}</span>
+        </a>
+    </li>
+</script>
+

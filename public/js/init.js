@@ -53,6 +53,8 @@ $(function() {
         
         _buildAccuratedRecipes(res.accurated);
         _buildApproximateRecipes(res.approximate);
+
+        $(document).trigger('build', { type: 'paginator', data: res.paginator });
     };
 
     function _searched() {

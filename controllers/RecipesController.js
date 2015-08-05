@@ -2,7 +2,7 @@ var RECIEPS_LIMIT = 10,
     TOTAL_AMOUNT = 0;
 
 function prepareRecipes(data, tempArr, ingredients) {
-    var approximate,
+    var approximate, _result,
         result = [];
 
     // Перебираем все рецепты
@@ -49,7 +49,7 @@ function prepareRecipes(data, tempArr, ingredients) {
     TOTAL_AMOUNT = result.length;
 
     // Готовим данные для короткой выдачи
-    result = result.slice(0, RECIEPS_LIMIT).map(function(item) {
+    _result = result.slice(0, RECIEPS_LIMIT).map(function(item) {
         return {
             name: item.name,
             ingredients: item.search,
@@ -83,10 +83,17 @@ function prepareRecipes(data, tempArr, ingredients) {
     });
 
     return JSON.stringify({
-                accurated: result,
+                accurated: _result,
                 approximate: approximate,
                 paginator: {
-                    total: TOTAL_AMOUNT
+                    total: {
+                        acc: result.length,
+                        app: data.length
+                    },
+                    amount: {
+                        acc: _result.length,
+                        app: approximate.length
+                    }
                 }
             });
 };
