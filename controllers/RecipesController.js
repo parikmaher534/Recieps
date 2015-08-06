@@ -1,4 +1,7 @@
 var RECIEPS_LIMIT = 10,
+    RECIEPS_OFFSET = 0,
+    APPROX_REC_LIMIT = RECIEPS_LIMIT / 2,
+    APPROX_REC_OFFSET = 0,
     TOTAL_AMOUNT = 0;
 
 function prepareRecipes(data, tempArr, ingredients) {
@@ -49,7 +52,7 @@ function prepareRecipes(data, tempArr, ingredients) {
     TOTAL_AMOUNT = result.length;
 
     // Готовим данные для короткой выдачи
-    _result = result.slice(0, RECIEPS_LIMIT).map(function(item) {
+    _result = result.slice(RECIEPS_OFFSET, RECIEPS_OFFSET + RECIEPS_LIMIT).map(function(item) {
         return {
             name: item.name,
             ingredients: item.search,
@@ -58,7 +61,7 @@ function prepareRecipes(data, tempArr, ingredients) {
     });
 
     // По-умолчанию показываем первые 'RECIEPS_LIMIT / 2' лучших совпадений
-    approximate = data.slice(0, RECIEPS_LIMIT / 2).map(function(item) {
+    approximate = data.slice(APPROX_REC_OFFSET, APPROX_REC_OFFSET + APPROX_REC_LIMIT).map(function(item) {
 
         // Выделяем нехватающие элементы
         var other = [];
@@ -85,6 +88,8 @@ function prepareRecipes(data, tempArr, ingredients) {
     return JSON.stringify({
                 accurated: _result,
                 approximate: approximate,
+                offset: RECIEPS_OFFSET,
+                limit: RECIEPS_LIMIT,
                 paginator: {
                     total: {
                         acc: result.length,
@@ -107,7 +112,13 @@ module.exports = {
             params = req.query,
             tempArr;
 
-        if (params && params.limit) RECIEPS_LIMIT = params.limit;
+        if (params) {
+            RECIEPS_LIMIT = params.accLimit || RECIEPS_LIMIT;
+            RECIEPS_OFFSET = params.accOffset || RECIEPS_OFFSET;
+
+            APPROX_REC_LIMIT = params.appLimit || APPROX_REC_LIMIT;
+            APPROX_REC_OFFSET = params.appOffset || APPROX_REC_OFFSET;
+        };
 
         if (
             ingredients &&

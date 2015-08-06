@@ -1,6 +1,7 @@
 $(function() {
 
-    var paginatorSource, paginatorTemplate,
+    var CURRENT_PAGE = 0,
+    	paginatorSource, paginatorTemplate,
     	paginatorItemSource, paginatorItemTemplate;
 
 
@@ -27,28 +28,41 @@ $(function() {
 
 	function _buildAccurated(data) {
 		var htmlStr = '',
-			pages = Math.ceil(data.total.acc / data.amount.acc);
+			pages = Math.ceil(data.paginator.total.acc / data.limit);
 
 		for (var i = 0; i < pages; i++) {
 			htmlStr += paginatorItemTemplate({
+							pageNum: i + 1,
 							num: i, 
-							iscurrent: i == 0 ? true : false
+							iscurrent: i == CURRENT_PAGE ? true : false
 						});
 		};
 
-        $('.results-accurated').append(paginatorTemplate({ content: htmlStr }));
+        $('.results-accurated').prepend(paginatorTemplate({ content: htmlStr }));
 
         _addPaginatorEvents();
 	};
 
 	function _addPaginatorEvents() {
 		$('.paginator-item__pseudo-link').on('click', function() {
-			var pageNum = $(this).data('num');
+			var pageNum = $(this).data('num'),
+				isCurrent = $(this).parent().hasClass('paginator-current');
 
-			// TODO: Сделать метод получения текущего offset и limit рецептов
-			// Кешировать результат поиска для пагинатора
+			if (!isCurrent) {
+				$('.paginator-tem').removeClass('paginator-current');
+				$(this).parent().addClass('paginator-current');
 
-			$(document).trigger('get', { type: 'recipes', data: { offset: 0, limit: 0 }});
+				CURRENT_PAGE = pageNum;
+
+				$(document).trigger('get', { 
+					type: 'recipes', 
+					data: { 
+						redraw: 'acc',
+						page: pageNum, 
+						appage: 0 //TODO: это
+					}
+				});
+			};
 		});
 	};
 });

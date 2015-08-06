@@ -1,6 +1,14 @@
 $(function() {
-    var OFFSET = 0,
+    var _REDRAWTYPE = null,
+        _GET_RECIEPS_REQ = null,
+        _ISPAGINATED = null,
+
+        OFFSET = 0,
         LIMIT = 10,
+        ALIMIT =  LIMIT / 2,
+        PAGENUM = 0,
+        APPAGENUM = 0,
+
         body = $('body'),
         search = $('.ingredient-autocomplete'),
         searchButtonWrapper = $('.button__wrapper'),
@@ -13,11 +21,25 @@ $(function() {
 
     searchButton.on('click', _searchRecipes);
 
+    $(document).on('get', function(e, data) {
+        if (data.type == 'recipes') {
+
+            // Номер текущей страницы для точных и приближенных совпадений
+            PAGENUM = data.data.page;
+            APPAGENUM = data.data.appage;
+
+            _REDRAWTYPE = data.data.redraw;
+
+            _searchRecipes();
+        };
+    });
 
     function _searchRecipes() {
         _lockButton();
 
-        $.ajax({
+        if (_GET_RECIEPS_REQ) _GET_RECIEPS_REQ.abort();
+
+        _GET_RECIEPS_REQ = $.ajax({
             type: 'GET',
             url: '.recipes',
             data: _getData(),
@@ -39,8 +61,14 @@ $(function() {
         });
 
         return {
-            offset: OFFSET,
-            limit: LIMIT,
+            // Точные рецепты
+            accOffset: PAGENUM * LIMIT,
+            accLimit: LIMIT,
+
+            // Приближенные рецепты
+            appOffset: APPAGENUM * ALIMIT,
+            appLimit: ALIMIT,
+
             ingredients: arr.join(',')
         };
     };
@@ -49,12 +77,31 @@ $(function() {
         OFFSET += LIMIT;
 
         _searched();
-        _clearResults();
         
-        _buildAccuratedRecipes(res.accurated);
-        _buildApproximateRecipes(res.approximate);
+        _drawRecipes(res);
 
-        $(document).trigger('build', { type: 'paginator', data: res.paginator });
+        if (!_ISPAGINATED) {
+            _ISPAGINATED = $(document).trigger('build', { type: 'paginator', data: res });
+        };
+
+        _GET_RECIEPS_REQ = null;
+    };
+
+    function _drawRecipes(res) {
+        switch(_REDRAWTYPE) {
+            case 'acc':
+                _clearResults($('.results-accurated'));
+                _buildAccuratedRecipes(res.accurated);
+                break;
+            case 'app':
+                _clearResults($('.results-approximate'));
+                _buildApproximateRecipes(res.approximate);
+                break;
+            default:
+                _clearResults($('.results'));
+                _buildAccuratedRecipes(res.accurated);
+                _buildApproximateRecipes(res.approximate);
+        };
     };
 
     function _searched() {
@@ -65,8 +112,8 @@ $(function() {
         body.removeClass('searched');
     };
 
-    function _clearResults() {
-        $('.results-approximate, .results-accurated').empty();
+    function _clearResults(parent) {
+        parent.find('.recipe-item').remove();
     };
 
     function _lockButton() {

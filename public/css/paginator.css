@@ -2,7 +2,13 @@
 {
 	height: 40px;
 
-    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.paginator__disabled
+{
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .paginator .paginator-wrapper
@@ -45,6 +51,11 @@
 
 .paginator-current
 {
-    outline: 2px solid #999;
+    outline: 2px solid #E2DFDF;
+}
+
+.paginator-current .paginator-item__pseudo-link
+{
+    background-color: #CCC9C9;
 }
 

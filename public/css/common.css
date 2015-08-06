@@ -97,7 +97,6 @@ header
 .results
 {
   width: 100%;
-  padding: 20px;
 }
 
 .recipe-item
@@ -262,7 +261,9 @@ span.recipe-ingredients-aprox
   display: none;
 
   width: 60%;
+  
   padding-right: 15px;
+  padding-left: 20px;
 }
 
 .results-accurated .recipe-item
