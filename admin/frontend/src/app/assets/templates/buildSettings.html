@@ -1,0 +1,40 @@
+<header class="header">
+	<div class="header__title" ng-click="goToHome()">dlux_console</div>
+
+	<div class="header__user">
+		<div class="dropdown user-account__menu">
+			<a class="sidebar__select" href="#" data-toggle="dropdown">
+				{{_profile.firstName}} {{_profile.lastName}}
+			</a>
+			<span class="caret"></span>
+			<ul class="dropdown-menu">
+			    <li><a href="/user/settings">account settings</a></li>
+			    <li><a href="#" ng-click="logout()">log out</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="header__help">
+		<a href="mailto:kolya.p@speedandfunction.com">get help</a>
+	</div>
+</header>
+
+<div class="buildSettings row content">
+	<div class="col-md-2 content-col">
+    	<b>Conttollers</b>
+	</div>
+
+	<div class="col-md-10 content-col">
+		<p>
+			dlux Pro Contoller<br/>
+			serial: P1XXXXXXX<br/>
+			version: 1.XXXXXXX<br/>
+		</p>
+
+		<p>
+			dlux Pro Extender<br/>
+			serial: P1XXXXXXX<br/>
+			version: 1.XXXXXXX<br/>
+		</p>
+	</div>
+</div>

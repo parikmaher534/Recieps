@@ -1,0 +1,29 @@
+@media
+  screen and (min-device-width: 768px),
+  screen and (min-width: 768px) {
+
+  .d-h{ display: none; }
+  .d-v{ display: block; }
+  .d-v-i{ display: inline; }
+  .d-v-ib{ display: inline-block; }
+  .d-v-tbc{ display: table-cell; }
+}
+
+@media
+  screen and (max-device-width: 767px),
+  screen and (max-width: 767px) {
+
+  @import "_phones";
+
+  .m-h{ display: none; }
+  .m-v{ display: block; }
+  .m-v-i{ display: inline; }
+  .m-v-ib{ display: inline-block; }
+  .m-v-tbc{ display: table-cell; }
+}
+@media screen and (max-device-width: 767px) and (orientation: landscape) {
+
+}
+@media screen and (max-device-width: 567px) and (orientation: portrait) {
+
+}

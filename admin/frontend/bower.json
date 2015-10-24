@@ -1,0 +1,26 @@
+{
+  "name": "dlux-ui",
+  "main": [
+    "/dist/bstow-ui.min.js",
+    "/dist/bstow-ui.min.css"
+  ],
+  "version": "0.0.1",
+  "description": "BSTOW UI",
+  "authors": ["Speed&Function"],
+  "ignore": [
+    "**/.*",
+    "package.json",
+    "klei.json",
+    "gulpfile.js",
+    "node_modules",
+    "bower_components",
+    "src"
+  ],
+  "dependencies": {
+    "angular": "~1.4.x",
+    "angular-ui-router": "~0.2.15",
+    "angular-sanitize": "",
+    "normalize.css": "~3",
+    "easyModal": ""
+  }
+}

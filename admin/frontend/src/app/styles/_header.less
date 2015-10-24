@@ -1,0 +1,60 @@
+.header
+{
+	position: fixed;
+	top: 0;
+	z-index: 1;
+
+	width: 100%;
+	height: 60px;
+
+    padding: 10px;
+
+	border-bottom: 1px solid #CCC;
+	box-shadow: 0 0 10px #CCC;
+	background-color: #FFF;
+
+	a
+	{
+		text-decoration: underline;
+	}
+
+	.user-account__menu {
+		.dropdown-menu {
+			left: auto;
+			right: 0;
+		}
+	}
+
+	.header__title
+	{
+		font-size: 24px;
+	    line-height: 38px;
+	    cursor: pointer;
+	}
+
+	.header__user,
+	.header__help,
+	.header__logout
+	{
+	    position: absolute;
+	    right: 10px;
+	}
+
+	.header__help
+	{
+		top: 32px;
+	}
+
+	.header__user
+	{
+		top: 8px;
+		font-size: 17px;
+	}
+
+	.header__logout
+	{
+		top: 32px;
+		right: 80px;
+	}
+}
+
