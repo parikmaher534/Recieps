@@ -1,4 +1,4 @@
-process.env.PORT = process.env.WEB_PORT || process.env.PORT || 3003;
+process.env.PORT = process.env.WEB_PORT || process.env.PORT || 3033;
 
 module.exports = {
     project: {
@@ -8,7 +8,7 @@ module.exports = {
     mongodb: {
         host: '127.0.0.1',
         dbname: 'WantToCook',
-        port: 27017
+        port: 27100
     },
 
     web: {

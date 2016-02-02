@@ -11,6 +11,7 @@ RecipeSchema = mongoose.Schema({
     photo: { type: String, trim: true },
     content: { type: String, trim: true },
     totalCalories: { type: Number },
+    counter: { type: Number },
     linkToOrigin: { type: String },
     search: [{ type: String, trim: true, index: true }]
 });

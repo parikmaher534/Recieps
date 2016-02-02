@@ -136,6 +136,7 @@ module.exports = {
             )
             .exec(
                 function(err, data) {
+                    console.timeEnd('test');
                     if (!err) {
                         res.send(prepareRecipes(data, tempArr, ingredients, params));
                     } else {

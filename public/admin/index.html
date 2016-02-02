@@ -1,0 +1,36 @@
+<!DOCTYPE>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Ingredients</title>
+        <link rel="stylesheet" href="/admin/css/ingredients.css">
+
+        <script src="../js/vendors/jquery-2.1.4.min.js"></script>
+        <script src="../js/vendors/handlebars-v3.0.3.js"></script>
+    </head>
+
+    <body>
+        <div id="content">
+
+        </div>
+
+        <script src="/admin/js/ingredients.js"></script>
+
+        <script id="ingredient-tmpl" type="text/x-handlebars-template">
+            <div class="ingredient" data-id="{{_id}}">
+                <span class="ingredient__name">{{name}}</span>
+                <span class="ingredient__sinonym">{{sinonym}}</span>
+                <span class="ingredient__remove">
+                    <span class="ingredient__remove-icon">+</span>
+                </span>
+                <span class="ingredient__edit">=</span>
+
+                <form>
+                    <input type="text" name="name" value="{{name}}"/>
+                    <textarea name="sinonym">{{sinonym}}</textarea>
+                    <button>Save</button>
+                </form>
+            </div>
+        </script>
+    </body>
+</html>
